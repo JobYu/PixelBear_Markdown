@@ -2,6 +2,8 @@
 
 一个简单的 Markdown 转微信公众号格式的工具，使用 HTML5 + JavaScript 实现。
 
+![示例图片](./preview.png)
+
 ## 功能特点
 
 - 实时预览 Markdown 转换效果
