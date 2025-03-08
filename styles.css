@@ -1,0 +1,184 @@
+/* 编辑器样式 */
+body {
+    background-color: #f8f9fa;
+}
+
+.CodeMirror {
+    height: 100%;
+    min-height: 500px;
+    font-family: 'Fira Code', Consolas, Monaco, 'Andale Mono', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    border: none;
+}
+
+.card {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: none;
+}
+
+.card-header {
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* 微信公众号样式 */
+.wechat-format {
+    font-size: 15px;
+    line-height: 1.75;
+    letter-spacing: 0.05em;
+    color: #333;
+    word-break: break-all;
+    word-wrap: break-word;
+    text-align: justify;
+    position: relative;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    min-height: 500px;
+    max-height: 800px;
+    overflow-y: auto;
+}
+
+.wechat-format p {
+    margin-bottom: 1em;
+}
+
+.wechat-format p.indent {
+    text-indent: 2em;
+}
+
+.wechat-format h1, 
+.wechat-format h2, 
+.wechat-format h3, 
+.wechat-format h4, 
+.wechat-format h5, 
+.wechat-format h6 {
+    margin-top: 1.2em;
+    margin-bottom: 0.8em;
+    line-height: 1.35;
+    font-weight: bold;
+    color: #0F4C81;
+}
+
+.wechat-format h1 {
+    font-size: 1.8em;
+    margin-top: 0.6em;
+}
+
+.wechat-format h2 {
+    font-size: 1.6em;
+}
+
+.wechat-format h3 {
+    font-size: 1.4em;
+}
+
+.wechat-format h4 {
+    font-size: 1.2em;
+}
+
+.wechat-format h5 {
+    font-size: 1.1em;
+}
+
+.wechat-format h6 {
+    font-size: 1em;
+}
+
+.wechat-format blockquote {
+    margin: 1em 0;
+    padding: 0.5em 1em;
+    border-left: 4px solid #0F4C81;
+    background-color: rgba(15, 76, 129, 0.05);
+    color: #666;
+}
+
+.wechat-format ul, 
+.wechat-format ol {
+    margin-bottom: 1em;
+    padding-left: 2em;
+}
+
+.wechat-format ul li, 
+.wechat-format ol li {
+    margin-bottom: 0.5em;
+}
+
+.wechat-format pre {
+    margin-bottom: 1em;
+    padding: 1em;
+    background-color: #f8f8f8;
+    border-radius: 5px;
+    overflow-x: auto;
+}
+
+.wechat-format code {
+    font-family: Consolas, Monaco, 'Andale Mono', monospace;
+    font-size: 0.9em;
+    background-color: #f8f8f8;
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    color: #e83e8c;
+}
+
+.wechat-format pre code {
+    display: block;
+    padding: 0;
+    color: #333;
+    background-color: transparent;
+}
+
+.wechat-format img {
+    max-width: 100%;
+    height: auto;
+    margin: 1em auto;
+    display: block;
+    border-radius: 5px;
+}
+
+.wechat-format table {
+    width: 100%;
+    margin-bottom: 1em;
+    border-collapse: collapse;
+}
+
+.wechat-format table th,
+.wechat-format table td {
+    padding: 0.5em;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.wechat-format table th {
+    background-color: #f8f8f8;
+    font-weight: bold;
+}
+
+.wechat-format hr {
+    margin: 1.5em 0;
+    border: 0;
+    border-top: 1px solid #eee;
+}
+
+.wechat-format a {
+    color: #0F4C81;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(15, 76, 129, 0.3);
+}
+
+.wechat-format a:hover {
+    border-bottom: 1px solid #0F4C81;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .wechat-format {
+        padding: 15px;
+        min-height: 300px;
+    }
+    
+    .CodeMirror {
+        min-height: 300px;
+    }
+} 
