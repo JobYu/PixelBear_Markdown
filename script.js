@@ -170,7 +170,16 @@ function initEventListeners() {
     
     // 复制文本按钮
     document.getElementById('copyTextBtn').addEventListener('click', () => {
-        copyToClipboard(preview.innerText, '已复制文本到剪贴板');
+        // 创建一个临时容器来存储带格式的内容
+        const tempContainer = document.createElement('div');
+        tempContainer.innerHTML = preview.innerHTML;
+        
+        // 移除不需要的元素
+        const elementsToRemove = tempContainer.querySelectorAll('sup, .reference-list');
+        elementsToRemove.forEach(el => el.remove());
+        
+        // 复制带格式的内容
+        copyToClipboard(tempContainer.innerHTML, '已复制带格式文本到剪贴板');
     });
     
     // 样式设置变化时更新预览
@@ -419,11 +428,31 @@ function processMathEquations() {
 
 // 复制到剪贴板
 function copyToClipboard(text, message) {
-    navigator.clipboard.writeText(text).then(() => {
+    // 创建一个临时容器
+    const container = document.createElement('div');
+    container.innerHTML = text;
+    container.style.position = 'fixed';
+    container.style.opacity = '0';
+    document.body.appendChild(container);
+    
+    // 选择内容
+    const range = document.createRange();
+    range.selectNodeContents(container);
+    const selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+    
+    try {
+        // 执行复制命令
+        document.execCommand('copy');
         showToast(message);
-    }).catch(err => {
+    } catch (err) {
         showToast('复制失败: ' + err);
-    });
+    }
+    
+    // 清理
+    selection.removeAllRanges();
+    document.body.removeChild(container);
 }
 
 // 显示提示框
