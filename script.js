@@ -300,8 +300,8 @@ function updatePreview() {
                 linkReferenceMap[href] = refIndex;
             }
             
-            // 普通链接，添加引用编号
-            return `<a href="${href}" title="${title || text}" style="color:${themeColor.value};border-bottom:1px solid ${hexToRgba(themeColor.value, 0.3)};">${text}<sup>[${refIndex}]</sup></a>`;
+            // 普通链接，不再添加引用编号
+            return `<a href="${href}" title="${title || text}" style="color:${themeColor.value};border-bottom:1px solid ${hexToRgba(themeColor.value, 0.3)};">${text}</a>`;
         };
         
         // 自定义图片渲染
@@ -375,18 +375,17 @@ function updatePreview() {
 function generateLinkReferenceList() {
     let html = '<div class="reference-list" style="border-top:1px solid rgba(15, 76, 129, 0.3);margin-top:2em;padding-top:1em;">';
     html += '<h3 style="color:#0F4C81;font-weight:bold;">参考链接</h3>';
-    html += '<ol style="padding-left:2em;">';
+    html += '<ul style="padding-left:1em;list-style-type:none;">';
     
-    linkReferences.forEach((ref, index) => {
-        html += `<li class="reference-item" style="margin-bottom:0.5em;">
-            <span class="reference-number" style="color:#0F4C81;font-weight:bold;">[${index + 1}]</span> 
+    linkReferences.forEach((ref) => {
+        html += `<li class="reference-item" style="margin-bottom:1em;padding-left:0.5em;">
             <a href="${ref.href}" target="_blank" style="color:#0F4C81;text-decoration:none;border-bottom:1px solid rgba(15, 76, 129, 0.3);">${ref.title}</a>
             <br>
-            <span style="color:#666;font-size:0.9em;margin-left:1.5em;word-break:break-all;">${ref.href}</span>
+            <span style="color:#666;font-size:0.9em;word-break:break-all;">${ref.href}</span>
         </li>`;
     });
     
-    html += '</ol></div>';
+    html += '</ul></div>';
     return html;
 }
 
