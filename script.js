@@ -165,7 +165,63 @@ function initEventListeners() {
     
     // 复制 HTML 按钮
     document.getElementById('copyHtmlBtn').addEventListener('click', () => {
-        copyToClipboard(preview.innerHTML, '已复制 HTML 到剪贴板');
+        // 创建一个临时容器来存储内容
+        const tempContainer = document.createElement('div');
+        tempContainer.innerHTML = preview.innerHTML;
+        
+        // 移除所有不需要的类
+        const allElements = tempContainer.getElementsByTagName('*');
+        for (let el of allElements) {
+            // 保留代码高亮相关的类
+            if (!el.classList.contains('hljs') && !el.className.startsWith('language-')) {
+                el.removeAttribute('class');
+            }
+            
+            // 移除所有样式
+            el.removeAttribute('style');
+            
+            // 为标题设置字号
+            if (el.tagName.match(/^H[1-6]$/)) {
+                const level = parseInt(el.tagName[1]);
+                const fontSize = Math.max(1.6 - (level - 1) * 0.1, 1);
+                el.style.fontSize = `${fontSize}em`;
+                el.style.fontWeight = 'bold';
+                el.style.margin = '0.5em 0';
+            }
+            
+            // 为引用块设置样式
+            if (el.tagName === 'BLOCKQUOTE') {
+                el.style.borderLeft = '4px solid #666';
+                el.style.margin = '1em 0';
+                el.style.padding = '0.5em 1em';
+            }
+            
+            // 为代码块设置样式
+            if (el.tagName === 'PRE') {
+                el.style.margin = '1em 0';
+                el.style.padding = '1em';
+                el.style.backgroundColor = '#f6f8fa';
+                el.style.borderRadius = '3px';
+                el.style.overflow = 'auto';
+            }
+            
+            // 为图片设置样式
+            if (el.tagName === 'IMG') {
+                el.style.maxWidth = '100%';
+                el.style.height = 'auto';
+                el.style.margin = '1em auto';
+                el.style.display = 'block';
+            }
+        }
+        
+        // 移除参考链接列表
+        const referenceList = tempContainer.querySelector('.reference-list');
+        if (referenceList) {
+            referenceList.remove();
+        }
+        
+        // 复制清理后的内容
+        copyToClipboard(tempContainer.innerHTML, '已复制 HTML 到剪贴板');
     });
     
     // 复制文本按钮
