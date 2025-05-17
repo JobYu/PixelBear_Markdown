@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnail cache files
+Thumbs.db
+
+# Spotlight
+.Spotlight-V100
+
+# Trashed files
+.Trashes
+
+# Zipped Mac OS X files
+__MACOSX 

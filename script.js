@@ -10,6 +10,7 @@ let fontSize;
 let themeColor;
 let lineHeight;
 let useIndent;
+let showReferenceLinks;
 
 // 链接引用收集
 let linkReferences = [];
@@ -125,6 +126,7 @@ function initElements() {
     themeColor = document.getElementById('themeColor');
     lineHeight = document.getElementById('lineHeight');
     useIndent = document.getElementById('useIndent');
+    showReferenceLinks = document.getElementById('showReferenceLinks');
     
     // 确保预览区域存在
     if (!preview) {
@@ -168,9 +170,9 @@ function initEventListeners() {
         copyToClipboard(preview.innerHTML, '已复制 HTML 到剪贴板');
     });
     
-    // 复制文本按钮
+    // 复制格式按钮（原复制文本按钮）
     document.getElementById('copyTextBtn').addEventListener('click', () => {
-        copyToClipboard(preview.innerText, '已复制文本到剪贴板');
+        copyFormattedContent();
     });
     
     // 样式设置变化时更新预览
@@ -179,6 +181,7 @@ function initEventListeners() {
     themeColor.addEventListener('input', applyStyles);
     lineHeight.addEventListener('change', applyStyles);
     useIndent.addEventListener('change', applyStyles);
+    showReferenceLinks.addEventListener('change', updatePreview);
 }
 
 // 应用样式
@@ -349,7 +352,7 @@ function updatePreview() {
         console.log('Markdown 已转换为 HTML');
         
         // 添加链接引用列表
-        if (linkReferences.length > 0) {
+        if (showReferenceLinks.checked && linkReferences.length > 0) {
             html += generateLinkReferenceList();
         }
         
@@ -438,4 +441,56 @@ function hexToRgba(hex, alpha = 1) {
     const g = parseInt(hex.slice(3, 5), 16);
     const b = parseInt(hex.slice(5, 7), 16);
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
+// 复制格式化内容（模拟全选+Ctrl+C）
+function copyFormattedContent() {
+    try {
+        // 创建选区
+        const selection = window.getSelection();
+        const range = document.createRange();
+        
+        // 清除现有选区
+        selection.removeAllRanges();
+        
+        // 选择预览区域内容
+        range.selectNodeContents(preview);
+        selection.addRange(range);
+        
+        // 执行复制命令
+        const successful = document.execCommand('copy');
+        
+        // 清除选区
+        selection.removeAllRanges();
+        
+        if (successful) {
+            showToast('已复制格式内容到剪贴板');
+        } else {
+            showToast('复制失败，请手动复制');
+        }
+    } catch (err) {
+        console.error('复制出错:', err);
+        showToast('复制失败: ' + err);
+        
+        // 回退到剪贴板API
+        try {
+            const htmlContent = preview.outerHTML;
+            const textContent = preview.innerText;
+            
+            // 尝试创建带格式的剪贴板项
+            const clipboardItem = new ClipboardItem({
+                'text/html': new Blob([htmlContent], { type: 'text/html' }),
+                'text/plain': new Blob([textContent], { type: 'text/plain' })
+            });
+            
+            navigator.clipboard.write([clipboardItem]).then(() => {
+                showToast('已复制格式内容到剪贴板');
+            }).catch(err => {
+                showToast('复制失败: ' + err);
+            });
+        } catch (backupErr) {
+            // 最后尝试普通文本复制
+            copyToClipboard(preview.innerText, '已复制文本内容到剪贴板（无格式）');
+        }
+    }
 } 
