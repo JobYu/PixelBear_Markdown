@@ -35,8 +35,7 @@ body {
     padding: 20px;
     background-color: #fff;
     border-radius: 5px;
-    min-height: 500px;
-    max-height: 800px;
+    height: 100%;
     overflow-y: auto;
 }
 
